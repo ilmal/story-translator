@@ -3,7 +3,7 @@ import requests
 
 def import_stories(story_info):
 
-    url = story_info[0]
+    url = "https://americanliterature.com" + story_info[0]
     story_name = story_info[1]
 
     headers = {
@@ -23,11 +23,12 @@ def import_stories(story_info):
 
     soup = BeautifulSoup(response.text)
 
-    mydiv = soup.find_all("div", {"class": "al-jumbotron"})[0]
+    mydivs = soup.find_all("div", {"class": "al-jumbotron"})
+    if len(mydivs) == 0: mydivs = soup.find_all("div", {"class": "jumbotron"})
+
+    mydiv = mydivs[0]
 
     story = mydiv.text
-
-    # print(story)
 
     return (story, story_name)
 
