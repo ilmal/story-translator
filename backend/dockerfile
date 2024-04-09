@@ -1,0 +1,24 @@
+# Use Python base image
+FROM python:3.9-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements file
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application
+COPY . .
+
+# Set environment variables
+ENV CACHE_SAVE_DIR="/home/nils/programming/story-translator/cache"
+ENV PYTHONWARNINGS="ignore"
+
+# Expose port if needed
+# EXPOSE 5000
+
+# Command to run the application
+CMD ["flask", "--app", "main.py", "run", "--host", "0.0.0.0"]

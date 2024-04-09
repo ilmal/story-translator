@@ -24,19 +24,19 @@ const Story = () => {
     useEffect(()=>{
         if (story === null) return
 
-        // const URL = process.env.REACT_APP_BACKEND_URL + 
-        //             `/api/get_story_text?story=${story.replace("%20", " ")}&language=${"zh-cn"}`
-        // const requestOptions = {
-        //     method: 'GET',
-        // };
-        // fetch(URL, requestOptions)
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         setStory_data(data)
-        //     })
-        //     .catch(err => {
-        //         setErrMessage(err.toString())
-        //     })
+        const URL = process.env.REACT_APP_BACKEND_URL + 
+                    `/api/get_story_text?story=${story.replace("%20", " ")}&language=${"zh-cn"}`
+        const requestOptions = {
+            method: 'GET',
+        };
+        fetch(URL, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                setStory_data(data)
+            })
+            .catch(err => {
+                setErrMessage(err.toString())
+            })
             
 
 
