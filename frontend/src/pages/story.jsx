@@ -13,14 +13,6 @@ const Story = () => {
     const [story_data, setStory_data] = useState("")
     const [errMessage, setErrMessage] = useState("")
 
-    const url = process.env.REACT_APP_BACKEND_WS_URL + "/my_event"
-
-    useWebSocket(url, {
-        onOpen: () => {
-          console.log('WebSocket connection established.');
-        }
-    })
-
     useEffect(()=>{
         if (story === null) return
 
@@ -38,9 +30,6 @@ const Story = () => {
                 setErrMessage(err.toString())
             })
             
-
-
-
     },[])
 
     const display_text = ()=>{
