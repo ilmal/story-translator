@@ -8,7 +8,9 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip3 install --upgrade pip
+RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip3 install httpx==0.26.0 h11==0.14.0 httpcore==1.0.5
 
 # Copy the rest of the application
 COPY . .
