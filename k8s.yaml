@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: story-translator
   name: frontend-deployment
 spec:
   replicas: 1
@@ -14,25 +15,34 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: <frontend-image-name>
+        image: nils.u1.se:30157/story-translator/frontend:latest
         ports:
         - containerPort: 80
+        env:
+          - name: BACKEND_URL
+            value: "http://backend-service:5000"
+
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: story-translator
   name: frontend-service
 spec:
   selector:
     app: frontend
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 80
+      port: 3001
+      targetPort: 3001
+
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: story-translator
   name: backend-deployment
 spec:
   replicas: 1
@@ -46,13 +56,26 @@ spec:
     spec:
       containers:
       - name: backend
-        image: <backend-image-name>
+        image: nils.u1.se:30157/story-translator/backend:latest
         ports:
         - containerPort: 5000
+        volumeMounts:
+        - mountPath: /cache
+          name: story-translator-persistance
+      volumes:
+        - name: story-translator-persistance
+          persistentVolumeClaim:
+            claimName: story-translator-pvc
+        env:
+          - name: CACHE_SAVE_DIR
+            value: "/cache"
+
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: story-translator
   name: backend-service
 spec:
   selector:
@@ -61,3 +84,20 @@ spec:
     - protocol: TCP
       port: 5000
       targetPort: 5000
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: story-translator
+  name: story-translator-pvc
+spec:
+  storageClassName: nfs-client
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+
+
