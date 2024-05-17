@@ -3,7 +3,7 @@ import { useOutletContext } from "react-router-dom";
 
 
 
-const Story = () => {
+const StoryGenerated = () => {
     const [set_language] = useOutletContext();
 
     const queryParameters = new URLSearchParams(window.location.search)
@@ -16,7 +16,7 @@ const Story = () => {
         if (story === null) return
 
         const URL = process.env.REACT_APP_BACKEND_URL + 
-                    `/api/get_story_text?story=${story.replace("%20", " ")}&language=${"zh-cn"}`
+                    `/api/get_generated_text?story=${story.replace("%20", " ")}&language=${"zh-cn"}`
         const requestOptions = {
             method: 'GET',
         };
@@ -37,22 +37,33 @@ const Story = () => {
         const return_arr = []
         let counter = 0
 
-        story_data.forEach(story_segment => {
+        for (let i=0; i<story_data.english_story.length; i++){
             return_arr.push(
-                <div key={counter}>
-                    <p className="original_text hide_text" id={"original_text_" + counter}>{story_segment[0]}</p>
+                <div key={i}>
+                    <p className="original_text hide_text" id={"original_text_" + i}>{story_data.english_story[i]}</p>
+                    <p className="hide_text">test</p>
                     <p 
-                    onTouchStart={(e)=>{
-                        e.target.previousElementSibling.classList.remove("hide_text")
-                    }} 
-                    onTouchEnd={(e)=>{
-                        e.target.previousElementSibling.classList.add("hide_text")
-                    }}
-                    className="translated_text" id={"translated_text_" + counter}>{story_segment[1]}</p>
+                    className="translated_text" id={"translated_text_" + i}>{story_data.pinyin_story[i].map((word, index) => {
+                        return (
+                            <span key={index} id={index} onTouchStart={(e)=>{
+                                e.target.parentNode.previousElementSibling.classList.remove("hide_text")
+                                e.target.parentNode.previousElementSibling.innerText = story_data.translation_array[i][e.target.id]
+                                e.target.parentNode.previousElementSibling.previousElementSibling.classList.remove("hide_text")
+                            }} 
+                            onTouchEnd={(e)=>{
+                                e.target.parentNode.previousElementSibling.classList.add("hide_text")
+                                e.target.parentNode.previousElementSibling.previousElementSibling.classList.add("hide_text")
+                            }}
+                            >{word + " "}</span>
+                        )
+                    })}</p>
                 </div>
             )
-            counter += 1
-        });
+        }
+
+        // story_data.forEach(story_segment => {
+        //     counter += 1
+        // });
 
         return return_arr
     }
@@ -79,4 +90,4 @@ const Story = () => {
 
 }
 
-export default Story
+export default StoryGenerated

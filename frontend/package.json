@@ -14,7 +14,8 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
-        "dev": "BROWSER=none REACT_APP_BACKEND_URL=http://nils.u1.se:30002 react-scripts start",
+        "dev": "BROWSER=none REACT_APP_BACKEND_URL=http://192.168.1.247:5000 react-scripts start",
+        "prod": "BROWSER=none REACT_APP_BACKEND_URL=http://nils.u1.se:30002 react-scripts start",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",

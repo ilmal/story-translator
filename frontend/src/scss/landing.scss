@@ -2,7 +2,7 @@
 
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 10vh 90vh;
+    grid-template-rows: 10% 90%;
 
     .title{
         grid-column: 1/2;
@@ -15,19 +15,30 @@
     }
 
 
-    .story_list{
-        grid-column: 1/2;
-        grid-row: 2/3;
+    .story_lists{
         display: flex;
-        flex-direction: column;
-        a{
-            margin-bottom: 1vh;
-            margin-left: 10vw;
-        }
-        .loading_message{
-            align-self: center;
-            margin-top: 10vh;
-            font-size: 1.2rem;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        min-height: fit-content;
+
+        margin-bottom: 15vh;
+
+        .story_list{
+            grid-column: 1/2;
+            grid-row: 2/3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5vh;
+            margin: 2vh 0;
+            min-width: 400px;
+            
+            .loading_message{
+                align-self: center;
+                margin-top: 10vh;
+                font-size: 1.2rem;
+            }
         }
     }
 }

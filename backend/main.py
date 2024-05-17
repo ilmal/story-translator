@@ -1,6 +1,8 @@
 from flask import Flask, request
 from flask_cors import CORS
 from flask_socketio import SocketIO, emit
+import ast
+import json
 
 import httpcore
 setattr(httpcore, 'SyncHTTPTransport', any)
@@ -42,7 +44,7 @@ def api_get_story_text():
         raise Exception("request did not have story or language info!")
     story = request.args.get('story', '')
     language = request.args.get('language', '')
-    
+
     for e in get_stories():
         if str(story).lower() == str(e[1]).lower():
             print("Importing story...")
@@ -65,6 +67,61 @@ def api_get_story_text():
 
 
     return "The story provided was not found on the server", 400
+
+@app.route("/api/get_generated_stories", methods=["GET"])
+def api_get_generated_stories():
+    stories = os.listdir(os.environ['GENERATED_STORIES_SAVE_DIR'])
+    result_list = []
+
+    if len(stories) > 0:
+        for e in stories:
+            if not ".py" in e:
+                continue
+            result_list.append([[], [e.split(".")[0]]])
+        return result_list
+    return False
+
+
+@app.route("/api/get_generated_text", methods=["GET"])
+def api_get_generated_text():
+    if not request.args.get('story', '') : 
+        return "request was without story or language info", 400
+
+    story = request.args.get('story', '')
+
+    print("STORY: ", story)
+
+    # Read the file
+    with open(os.environ['GENERATED_STORIES_SAVE_DIR'] + f"/{story}.py", "r") as file:
+        file_content = file.read()
+
+    # Extract variables using AST module
+    variables = {}
+    tree = ast.parse(file_content)
+
+    for node in tree.body:
+        if isinstance(node, ast.Assign):
+            for target in node.targets:
+                if isinstance(target, ast.Name):
+                    variables[target.id] = ast.literal_eval(node.value)
+
+    # Now you have the variables extracted
+    english_story = variables.get("english_story")
+    pinyin_story = variables.get("pinyin_story")
+    translation_array = variables.get("translation_array")
+
+    print("english_story", english_story)
+    print("pinyin_story", pinyin_story)
+    print("translation_array", translation_array)
+
+    return json.dumps({
+        "english_story": english_story,
+        "pinyin_story": pinyin_story,
+        "translation_array": translation_array
+    })
+
+
+
 
 
 def main():
