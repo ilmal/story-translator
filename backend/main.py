@@ -27,10 +27,12 @@ languages = [
 
 @app.route("/api/get_languages", methods=["GET"])
 def api_get_languages():
+    print("Handling get languages...")
     return languages
 
 @app.route("/api/get_stories", methods=["GET"])
 def api_get_stories():
+    print("Handling get_stories...")
     return get_stories()
 
 @app.route("/api/get_story_text", methods=["GET"])

@@ -1,3 +1,4 @@
-export CACHE_SAVE_DIR="/home/nils/programing/story-translator/cache"
+export CACHE_SAVE_DIR="./cache"
+export FLASK_APP=main.py
 
-PYTHONWARNINGS="ignore" flask --app main.py run --host 0.0.0.0
+PYTHONWARNINGS="ignore" flask  run --host 0.0.0.0
