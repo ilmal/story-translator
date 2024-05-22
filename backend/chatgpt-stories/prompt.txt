@@ -15,11 +15,7 @@ english_story = [
     "Once upon a time, there was a little cat.",
     "The little cat liked to play.",
     "Every day, the little cat played with a red ball.",
-    "One day, the ball rolled away.",
-    "The little cat looked for the ball everywhere.",
-    "Finally, the little cat found the ball under a big tree.",
-    "The little cat was very happy.",
-    "The little cat and the ball played together again."
+    ...
 ]
 
 # Pinyin Story
