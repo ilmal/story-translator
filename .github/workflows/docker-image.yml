@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: docker/login-action@v1
+    - uses: docker/login-action@v2
       with:
         registry: harbor.u1.se
         username: ${{ secrets.HARBOR_USERNAME  }}
