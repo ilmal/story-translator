@@ -16,7 +16,7 @@ RUN pip3 install httpx==0.26.0 h11==0.14.0 httpcore==1.0.5
 COPY . .
 
 # Set environment variables
-ENV CACHE_SAVE_DIR="/home/nils/programming/story-translator/cache"
+ENV CACHE_SAVE_DIR="/cache"
 ENV PYTHONWARNINGS="ignore"
 
 # Expose port if needed
