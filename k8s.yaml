@@ -15,12 +15,11 @@ spec:
     spec:
       containers:
       - name: frontend
-        imagePullPolicy: IfNotPresent
         image: nils.u1.se:30157/story-translator/frontend:latest
         ports:
         - containerPort: 80
         env:
-          - name: REACT_APP_BACKEND_URL
+          - name: BACKEND_URL
             value: "http://backend-service:5000"
 
 ---
@@ -57,20 +56,19 @@ spec:
     spec:
       containers:
       - name: backend
-        imagePullPolicy: IfNotPresent
         image: nils.u1.se:30157/story-translator/backend:latest
         ports:
-          - containerPort: 5000
+        - containerPort: 5000
         volumeMounts:
-          - mountPath: /cache
-            name: story-translator-persistance
-        env:
-          - name: CACHE_SAVE_DIR
-            value: "/cache"  
+        - mountPath: /cache
+          name: story-translator-persistance
       volumes:
         - name: story-translator-persistance
           persistentVolumeClaim:
             claimName: story-translator-pvc
+        env:
+          - name: CACHE_SAVE_DIR
+            value: "/cache"
 
 ---
 
