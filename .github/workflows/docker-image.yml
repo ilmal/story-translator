@@ -20,17 +20,17 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
+      uses: docker/setup-buildx-action@v3
 
     - name: Build and Push Backend Image
       working-directory: './backend' 
       run: |
-        docker build --no-cache -t harbor.u1.se/story-translator/backend:latest -f dockerfile .
+        docker build --no-cache -t harbor.u1.se/story-translator/backend:latest .
         docker push harbor.u1.se/story-translator/backend:latest
 
     - name: Build and Push Frontend Image
       working-directory: './frontend'
       run: |
-        docker build --no-cache -t harbor.u1.se/story-translator/frontend:latest -f dockerfile .
+        docker build --no-cache -t harbor.u1.se/story-translator/frontend:latest .
         docker push harbor.u1.se/story-translator/frontend:latest
 
