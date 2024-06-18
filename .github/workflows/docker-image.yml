@@ -18,15 +18,14 @@ jobs:
     
     - name: Build and Push Backend Image
       run: |
-        docker build -t harbor.u1.se/story-translator/backend:latest -f backend/Dockerfile ./backend
+        cd backend
+        docker build -t harbor.u1.se/story-translator/backend:latest -f Dockerfile .
         docker push harbor.u1.se/story-translator/backend:latest
-      working-directory: ${{ github.workspace }}
-
 
     - name: Build and Push Frontend Image
       run: |
-        docker build -t harbor.u1.se/story-translator/frontend:latest -f frontend/Dockerfile ./frontend
+        cd frontend
+        docker build -t harbor.u1.se/story-translator/frontend:latest -f Dockerfile .
         docker push harbor.u1.se/story-translator/frontend:latest
-      working-directory: ${{ github.workspace }}
 
 
