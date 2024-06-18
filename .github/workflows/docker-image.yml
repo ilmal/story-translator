@@ -16,6 +16,9 @@ jobs:
         username: ${{ secrets.HARBOR_USERNAME  }}
         password: ${{ secrets.HARBOR_PASSWORD }}
 
+    - name: Check out the repository
+      uses: actions/checkout@v4
+
     - name: Build and Push Backend Image
       working-directory: './backend' 
       run: |
