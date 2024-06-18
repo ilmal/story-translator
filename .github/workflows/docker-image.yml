@@ -1,0 +1,34 @@
+name: Create docker images
+
+on:
+  push:
+    branches: [ "prod" ]
+  pull_request:
+    branches: [ "prod" ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+      
+    - uses: docker/login-action@v1
+      with:
+        registry: harbor.u1.com
+        username: ${{ secrets.HARBOR_USERNAME  }}
+        password: ${{ secrets.HARBOR_PASSWORD }}
+
+    - name: Build and Push Backend Image
+      run: |
+        docker build . -f backend/dockerfile -t harbor.u1.se/story-translator/backend:latest
+        docker push harbor.u1.se/story-translator/backend:latest
+
+    - name: Build and Push Frontend Image
+      run: |
+        docker build . -f frontend/dockerfile -t harbor.u1.se/story-translator/frontend:latest
+        docker push harbor.u1.se/story-translator/frontend:latest
