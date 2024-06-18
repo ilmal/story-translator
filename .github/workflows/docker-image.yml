@@ -19,7 +19,7 @@ jobs:
       
     - uses: docker/login-action@v1
       with:
-        registry: harbor.u1.com
+        registry: harbor.u1.se
         username: ${{ secrets.HARBOR_USERNAME  }}
         password: ${{ secrets.HARBOR_PASSWORD }}
 
