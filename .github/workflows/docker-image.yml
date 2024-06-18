@@ -19,11 +19,13 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build and Push Backend Image
       run: |
+        cd backend
         docker build . -f backend/dockerfile -t harbor.u1.se/story-translator/backend:latest
         docker push harbor.u1.se/story-translator/backend:latest
 
     - uses: actions/checkout@v3
     - name: Build and Push Frontend Image
       run: |
+        cd frontend
         docker build . -f frontend/dockerfile -t harbor.u1.se/story-translator/frontend:latest
         docker push harbor.u1.se/story-translator/frontend:latest
