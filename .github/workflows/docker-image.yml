@@ -17,13 +17,13 @@ jobs:
         password: ${{ secrets.HARBOR_PASSWORD }}
     
     - name: Build and Push Backend Image
-      working-directory: ./backend 
+      working-directory: backend 
       run: |
         docker build -t harbor.u1.se/story-translator/backend:latest -f Dockerfile .
         docker push harbor.u1.se/story-translator/backend:latest
 
     - name: Build and Push Frontend Image
-      working-directory: ./frontend
+      working-directory: frontend
       run: |
         docker build -t harbor.u1.se/story-translator/frontend:latest -f Dockerfile .
         docker push harbor.u1.se/story-translator/frontend:latest
