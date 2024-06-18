@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: nils.u1.se:30157/story-translator/frontend:latest
+        image: harbor.u1.se/story-translator/frontend:latest
         ports:
         - containerPort: 80
         env:
@@ -56,7 +56,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: nils.u1.se:30157/story-translator/backend:latest
+        image: harbor.u1.se/story-translator/backend:latest
         ports:
         - containerPort: 5000
         volumeMounts:
