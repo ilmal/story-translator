@@ -15,9 +15,9 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: harbor.u1.se/story-translator/frontend:latest
+        image: harbor.u1.se/lan/frontend:latest
         ports:
-        - containerPort: 3001
+        - containerPort: 80
         env:
           - name: BACKEND_URL
             value: "http://backend-service:5000"
@@ -34,7 +34,7 @@ spec:
     app: frontend
   ports:
   - protocol: TCP
-    port: 3001
+    port: 80
     nodePort: 30158
   type: NodePort
 
@@ -57,7 +57,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: harbor.u1.se/story-translator/backend:latest
+        image: harbor.u1.se/lan/backend:latest
         ports:
         - containerPort: 5000
         volumeMounts:
@@ -73,8 +73,8 @@ spec:
 
 ---
 
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
   namespace: story-translator
   name: backend-service
@@ -82,9 +82,10 @@ spec:
   selector:
     app: backend
   ports:
-    - protocol: TCP
-      port: 5000
-      targetPort: 5000
+  - protocol: TCP
+    port: 5000
+    nodePort: 30159
+  type: NodePort
 
 ---
 
